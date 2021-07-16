@@ -1,12 +1,21 @@
 <template>
   <div class="custom-bar">
-
+    <transform-area></transform-area>
   </div>
 </template>
 
 <script>
+import Test from './Test';
+import TransformArea from '../components/TransformArea';
+import InputFan from "../components/InputFan";
+
 export default {
-  name: "CustomBar"
+  name: "CustomBar",
+  components: {
+    Test,
+    TransformArea,
+    InputFan,
+  }
 }
 </script>
 
