@@ -36,30 +36,22 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 
 export default {
   name: "ToolBar",
   data() {
-    return {
-      isDisplay: [
-        {value: true},
-        {value: false},
-        {value: false},
-        {value: false},
-        {value: false},
-        {value: false},
-        {value: false},
-        {value: false},
-      ],
-      currentTypeId: 0,
-    }
+    return {}
+  },
+  computed: {
+    ...mapState({
+      isDisplay: state => state.drawType.isDisplay,
+    })
   },
   methods: {
-    drawTypeChange(id) {
-      this.isDisplay[this.currentTypeId].value = false;
-      this.isDisplay[id].value = true;
-      this.currentTypeId = id;
-    },
+    ...mapActions({
+      drawTypeChange: 'drawTypeChange',
+    }),
   }
 }
 </script>
@@ -67,7 +59,7 @@ export default {
 <style lang="scss">
 .tool-bar {
   background: rgb(245, 245, 245);
-  width: 50px;
+  min-width: 50px;
 
   list-style-type: none;
   padding: 0;

@@ -1,7 +1,7 @@
 <template>
   <div class="test">
-    <div v-show="isDisplay"> {{ message }} </div>
-    <button @click="check">check</button>
+    <div id="cursor-test-1" class="cursor-test"></div>
+    <div id="cursor-test-2" class="cursor-test"></div>
   </div>
 </template>
 
@@ -10,25 +10,16 @@ export default {
   name: "Test",
   data() {
     return {
-      isDisplay: [true],
-      message: 'hello'
     }
   },
-  methods: {
-    check() {
-      if (this.isDisplay[0]) {
-        this.isDisplay[0] = false;
-        console.log(this.isDisplay[0]);
-        return;
-      }
-      this.isDisplay[0] = true;
-    }
-  }
 }
 </script>
 
 <style lang="scss">
   .test {
+    width: 100px;
+    height: 100px;
+    background: red;
 
   }
 </style>

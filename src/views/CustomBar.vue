@@ -18,14 +18,14 @@ export default {
     TransformArea,
     InputFan,
     AppearanceArea,
-    AlignArea
+    AlignArea,
   }
 }
 </script>
 
 <style lang="scss">
-  .custom-bar {
-    width: 300px;
-    background: rgb(245, 245, 245);
-  }
+.custom-bar {
+  width: 300px;
+  background: rgb(245, 245, 245);
+}
 </style>
