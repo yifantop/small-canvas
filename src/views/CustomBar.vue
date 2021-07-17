@@ -1,20 +1,24 @@
 <template>
   <div class="custom-bar">
+    <align-area></align-area>
     <transform-area></transform-area>
+    <appearance-area></appearance-area>
   </div>
 </template>
 
 <script>
-import Test from './Test';
 import TransformArea from '../components/TransformArea';
 import InputFan from "../components/InputFan";
+import AppearanceArea from "../components/AppearanceArea";
+import AlignArea from "../components/AlignArea";
 
 export default {
   name: "CustomBar",
   components: {
-    Test,
     TransformArea,
     InputFan,
+    AppearanceArea,
+    AlignArea
   }
 }
 </script>

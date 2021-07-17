@@ -1,0 +1,10 @@
+@use 'constant';
+
+// CustomBar组件中的“外观”功能块中的调色板的样式
+%palette-block-general {
+  width: 40px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid constant.$custom-font-color;
+  margin-right: 15px;
+}

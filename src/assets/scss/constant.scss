@@ -1,2 +1,12 @@
 $primary-color: red;
-$primary-font-size: 14px
+$primary-font-size: 14px;
+$custom-font-color: rgb(170, 170, 170);
+$sep-line-color: rgb(228, 228, 228);
+
+// customBar组件中每一个调整功能块的标题的统一样式
+%name-area-general {
+  text-align: left;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  font-size: $primary-font-size;
+}
