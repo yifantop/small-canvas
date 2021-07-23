@@ -5,6 +5,7 @@
 <script>
 import {mapActions, mapState} from 'vuex';
 import Konva from 'konva';
+import {drawShapePreFrame, saveShapeToShapesInfo} from "../js/utils/nodeToShape";
 
 export default {
   name: "CanvasArea",
@@ -25,6 +26,8 @@ export default {
   mounted() {
     // 初始化Konva stage
     this.initStage();
+    // 为stage绑定鼠标按下事件，根据按下鼠标时，currentTypeId是几来决定出现的图形是矩形还是圆还是...
+    this.bindDrawingEvent();
   },
   computed: {
     ...mapState({
@@ -102,7 +105,31 @@ export default {
         width: this.canvasAreaWidth - 4,
         height: this.canvasAreaHeight,
       });
-    }
+    },
+    /**
+     * 为stage绑定鼠标按下事件，一般在stage上按下鼠标，要么画图形，要么不画
+     */
+    bindDrawingEvent() {
+      let that = this;
+      let layer = new Konva.Layer();
+      this.stage.add(layer);
+      let pointerStartPosition = null;
+      let pointerEndPosition = null;
+
+      this.stage.on('mousedown', () => {
+        pointerStartPosition = that.stage.getPointerPosition();
+        that.stage.on('mousemove', () => {
+          pointerEndPosition = that.stage.getPointerPosition();
+          drawShapePreFrame(pointerStartPosition, pointerEndPosition, that.currentTypeId, layer);
+        });
+      });
+      this.stage.on('mouseup', () => {
+        // 只要鼠标抬起来，就清掉鼠标移动事件
+        that.stage.off('mousemove');
+        // 保存已画完的这个shape的信息
+        saveShapeToShapesInfo();
+      });
+    },
   }
 }
 </script>
@@ -113,12 +140,13 @@ export default {
   border-left: 2px solid rgb(228, 228, 228);
   border-right: 2px solid rgb(228, 228, 228);
 }
+
 .cursor-arrow {
   cursor: url("../assets/img/mouse-type/choose.png"), auto;
 }
 
 .cursor-aim-point {
-  cursor: url("../assets/img/mouse-type/ten.png"), auto;
+  cursor: url("../assets/img/mouse-type/ten.png") 16 16, auto;
 }
 
 .cursor-pen {
@@ -130,6 +158,6 @@ export default {
 }
 
 .cursor-scale {
-  cursor: url("../assets/img/mouse-type/scale.png"), auto;
+  cursor: url("../assets/img/mouse-type/scale.png") 16 16, auto;
 }
 </style>
