@@ -15,6 +15,8 @@ function drawShapePreFrame(startPosition, endPosition, shapeTypeId, layer) {
     case 1:
       currentDrawingShape = drawRectPreFrame(startPosition, endPosition, currentDrawingShape);
       break;
+    case 2:
+      currentDrawingShape = drawCirclePreFrame(startPosition, endPosition, currentDrawingShape);
   }
   layer.add(currentDrawingShape);
 }
@@ -36,6 +38,26 @@ function drawRectPreFrame(startPosition, endPosition, currentDrawingShape) {
     y: startPosition.y,
     width: endPosition.x - startPosition.x,
     height: endPosition.y - startPosition.y,
+    stroke: '#707070',
+    strokeWidth: 1
+  });
+}
+
+/**
+ * 画圆
+ * @param startPosition
+ * @param endPosition
+ * @param currentDrawingShape
+ */
+function drawCirclePreFrame(startPosition, endPosition, currentDrawingShape) {
+  if (currentDrawingShape ) {
+    currentDrawingShape.destroy();
+  }
+  let radius = (endPosition.x - startPosition.x) * Math.cos(45);
+  return new Konva.Circle({
+    x: startPosition.x + radius,
+    y: startPosition.y + radius,
+    radius: radius,
     stroke: '#707070',
     strokeWidth: 1
   });
