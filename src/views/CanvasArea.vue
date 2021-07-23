@@ -14,8 +14,13 @@ export default {
     window.onresize = function () {
       that.changeCanvasAreaWidth();
       that.changeCanvasAreaHeight();
+      // todo 每次改变stage的size之后，由于size可能只变一次，也可能变很多次（用鼠标慢慢scale页面大小）可以利用函数防抖减少以下三个函数执行的频率
       // 如果页面size变化，那么就销毁原stage，新建stage，然后把shape都重新画
       that.initStage();
+      // stage上的一些画图事件比如mouseup mousedown也都要重新绑定，因为原来的事件都已销毁
+      that.bindDrawingEvent(that.stage);
+      // 重画所有的shape
+      that.redrawShapes(that.stage);
     };
   },
   data() {
@@ -27,13 +32,14 @@ export default {
     // 初始化Konva stage
     this.initStage();
     // 为stage绑定鼠标按下事件，根据按下鼠标时，currentTypeId是几来决定出现的图形是矩形还是圆还是...
-    this.bindDrawingEvent();
+    this.bindDrawingEvent(this.stage);
   },
   computed: {
     ...mapState({
       currentTypeId: state => state.drawType.currentTypeId,
       canvasAreaWidth: state => state.canvasArea.canvasAreaSize.canvasAreaWidth,
       canvasAreaHeight: state => state.canvasArea.canvasAreaSize.canvasAreaHeight,
+      shapesInfo: state => state.shapes.shapesInfo,
     }),
     canvasAreaSizeStyleObj() {
       return {
@@ -109,27 +115,40 @@ export default {
     /**
      * 为stage绑定鼠标按下事件，一般在stage上按下鼠标，要么画图形，要么不画
      */
-    bindDrawingEvent() {
+    bindDrawingEvent(stage) {
       let that = this;
       let layer = new Konva.Layer();
-      this.stage.add(layer);
+      stage.add(layer);
       let pointerStartPosition = null;
       let pointerEndPosition = null;
 
-      this.stage.on('mousedown', () => {
-        pointerStartPosition = that.stage.getPointerPosition();
-        that.stage.on('mousemove', () => {
-          pointerEndPosition = that.stage.getPointerPosition();
+      stage.on('mousedown', () => {
+        pointerStartPosition = stage.getPointerPosition();
+        stage.on('mousemove', () => {
+          pointerEndPosition = stage.getPointerPosition();
           drawShapePreFrame(pointerStartPosition, pointerEndPosition, that.currentTypeId, layer);
         });
       });
-      this.stage.on('mouseup', () => {
+      stage.on('mouseup', () => {
         // 只要鼠标抬起来，就清掉鼠标移动事件
-        that.stage.off('mousemove');
+        stage.off('mousemove');
         // 保存已画完的这个shape的信息
         saveShapeToShapesInfo();
       });
     },
+    /**
+     * 重画所有的shape，这些shape来自vuex的shapesInfo
+     * @param stage
+     */
+    redrawShapes(stage) {
+      // 创建新的layer
+      let layer = new Konva.Layer();
+      stage.add(layer);
+      // 把layer add进stage
+      for(let shape of this.shapesInfo) {
+        layer.add(shape);
+      }
+    }
   }
 }
 </script>
