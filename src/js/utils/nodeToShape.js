@@ -20,6 +20,10 @@ function drawShapePreFrame(startPosition, endPosition, shapeTypeId, layer) {
       break;
     case 3:
       currentDrawingShape = drawTrianglePreFrame(startPosition, endPosition, currentDrawingShape);
+      break;
+    case 4:
+      currentDrawingShape = drawLinePreFrame(startPosition, endPosition, currentDrawingShape);
+      break;
   }
   layer.add(currentDrawingShape);
 }
@@ -79,6 +83,25 @@ function drawTrianglePreFrame(startPosition, endPosition, currentDrawingShape) {
   return new Konva.Line({
     // 点的顺序是：顶点，左点，右点
     points: [startPosition.x, endPosition.y, startPosition.x + (endPosition.x - startPosition.x) / 2, startPosition.y, endPosition.x, endPosition.y, startPosition.x, endPosition.y],
+    stroke: '#707070',
+    strokeWidth: 1
+  });
+}
+
+/**
+ * 画线
+ * @param startPosition
+ * @param endPosition
+ * @param currentDrawingShape
+ * @returns {Line<Config>}
+ */
+function drawLinePreFrame(startPosition, endPosition, currentDrawingShape) {
+  if (currentDrawingShape) {
+    currentDrawingShape.destroy();
+  }
+  return new Konva.Line({
+    // 点的顺序是：顶点，左点，右点
+    points: [startPosition.x, startPosition.y, endPosition.x, endPosition.y],
     stroke: '#707070',
     strokeWidth: 1
   });
