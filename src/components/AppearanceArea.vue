@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import CheckboxFan from "./CheckboxFan";
-import InputFan from "./InputFan";
+import CheckboxFan from "./CheckboxFan.vue";
+import InputFan from "./InputFan.vue";
 
 export default {
   name: "AppearanceArea",

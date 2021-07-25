@@ -7,10 +7,10 @@
 </template>
 
 <script>
-import TransformArea from '../components/TransformArea';
-import InputFan from "../components/InputFan";
-import AppearanceArea from "../components/AppearanceArea";
-import AlignArea from "../components/AlignArea";
+import TransformArea from '../components/TransformArea.vue';
+import InputFan from "../components/InputFan.vue";
+import AppearanceArea from "../components/AppearanceArea.vue";
+import AlignArea from "../components/AlignArea.vue";
 
 export default {
   name: "CustomBar",

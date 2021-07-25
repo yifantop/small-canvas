@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import InputFan from "./InputFan";
+import InputFan from "./InputFan.vue";
 
 export default {
   name: "TransformArea",
