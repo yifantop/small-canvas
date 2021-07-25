@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import ToolBar from "./ToolBar";
-import CanvasArea from "./CanvasArea";
-import CustomBar from "./CustomBar";
+import ToolBar from "./ToolBar.vue";
+import CanvasArea from "./CanvasArea.vue";
+import CustomBar from "./CustomBar.vue";
 
 export default {
   name: 'Home',
