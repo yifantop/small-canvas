@@ -41,7 +41,8 @@ import {mapState, mapActions} from 'vuex';
 export default {
   name: "ToolBar",
   data() {
-    return {}
+    return {
+    }
   },
   computed: {
     ...mapState({

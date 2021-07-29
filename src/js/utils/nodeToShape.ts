@@ -1,7 +1,8 @@
 import Konva from 'konva';
 import store from '../../store/index';
 
-let currentDrawingShape = null;
+// 声明currentDrawingShape的类型及初始值
+let currentDrawingShape: Konva.Shape  = null;
 
 /**
  * 画shape时可以依据鼠标的移动来确定shape的尺寸，此函数就是实现这个确定尺寸的过程
@@ -10,7 +11,7 @@ let currentDrawingShape = null;
  * @param shapeTypeId
  * @param layer
  */
-function drawShapePreFrame(startPosition, endPosition, shapeTypeId, layer) {
+function drawShapePreFrame(startPosition: Konva.Vector2d , endPosition: Konva.Vector2d, shapeTypeId: number, layer: Konva.Layer): void {
   switch (shapeTypeId) {
     case 1:
       currentDrawingShape = drawRectPreFrame(startPosition, endPosition, currentDrawingShape);
@@ -35,7 +36,7 @@ function drawShapePreFrame(startPosition, endPosition, shapeTypeId, layer) {
  * @param currentDrawingShape 上一个shape
  * @returns {Rect}
  */
-function drawRectPreFrame(startPosition, endPosition, currentDrawingShape) {
+function drawRectPreFrame(startPosition: Konva.Vector2d, endPosition: Konva.Vector2d, currentDrawingShape: Konva.Shape): Konva.Rect {
   // 清掉上一个矩形
   if (currentDrawingShape) {
     currentDrawingShape.destroy();
@@ -56,7 +57,7 @@ function drawRectPreFrame(startPosition, endPosition, currentDrawingShape) {
  * @param endPosition
  * @param currentDrawingShape
  */
-function drawCirclePreFrame(startPosition, endPosition, currentDrawingShape) {
+function drawCirclePreFrame(startPosition: Konva.Vector2d, endPosition: Konva.Vector2d, currentDrawingShape: Konva.Shape): Konva.Circle {
   if (currentDrawingShape ) {
     currentDrawingShape.destroy();
   }
@@ -76,7 +77,7 @@ function drawCirclePreFrame(startPosition, endPosition, currentDrawingShape) {
  * @param endPosition
  * @param currentDrawingShape
  */
-function drawTrianglePreFrame(startPosition, endPosition, currentDrawingShape) {
+function drawTrianglePreFrame(startPosition: Konva.Vector2d, endPosition: Konva.Vector2d, currentDrawingShape: Konva.Shape): Konva.Line {
   if (currentDrawingShape) {
     currentDrawingShape.destroy();
   }
@@ -95,7 +96,7 @@ function drawTrianglePreFrame(startPosition, endPosition, currentDrawingShape) {
  * @param currentDrawingShape
  * @returns {Line<Config>}
  */
-function drawLinePreFrame(startPosition, endPosition, currentDrawingShape) {
+function drawLinePreFrame(startPosition: Konva.Vector2d, endPosition: Konva.Vector2d, currentDrawingShape: Konva.Shape): Konva.Line {
   if (currentDrawingShape) {
     currentDrawingShape.destroy();
   }
@@ -110,7 +111,7 @@ function drawLinePreFrame(startPosition, endPosition, currentDrawingShape) {
 /**
  * 保存画好的形状到vuex的shapes中
  */
-function saveShapeToShapesInfo() {
+function saveShapeToShapesInfo(): void {
   // 调用vuex中的action将shape保存到shapes
   store.dispatch('addShapeToShapesInfo', currentDrawingShape)
     .then(() => {
