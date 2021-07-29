@@ -1,5 +1,8 @@
 # small-canvas
 
+## effect image
+![avatar](./src/assets/img/effect.png)
+
 ## Project setup
 ```
 npm install
